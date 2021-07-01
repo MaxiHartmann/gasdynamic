@@ -5,8 +5,10 @@ class zustand {
 	const double gasConst = 287.058;
 
 	int index;
-	double ma;
+	int input_Type;
+	double input_Value;
 
+	double ma;
 	double machStar;
 	double TdT0;
 	double pdp0;
@@ -15,10 +17,21 @@ class zustand {
 	double PM_Angle;
 	double AdAstar;
 
-    public:
-	// constructor declaration
-	zustand(int id, double mach);
+	double findMaFromAratio(double Aratio, int flowType);
+
+	double findMaFromPM_Angle(double PM_Angle);
+
+	double calcMachnumber(int type, double value);
 
 	void calcResults();
+
+	double calc_AdAstar(double ma);
+
+	double calc_PM_Angle(double Ma);
+
+    public:
+	// constructor declaration
+	zustand(int id, int inputType, double inputValue);
+
 	void printResults();
 };
