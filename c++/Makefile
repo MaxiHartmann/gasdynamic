@@ -1,24 +1,25 @@
+# -*- MakeFile -*-
+
 # the compiler: 
 # gcc for C program, 
 # g++ for C++
-CC = g++
+CC=g++
 
 # compiler flags:
 #  -g    adds debugging information to the executable file
 #  -Wall turns on most, but not all, compiler warnings
-CFLAGS  = -g -Wall
+CFLAGS=-g -Wall
 
-TARGET: myApp
-
-all: $(TARGET)
+all: myApp
 
 myApp: main.o isentropicFlow.o
-	$(CC) $(CFLAGS) -o myApp main.o isentropic.o
+	$(CC) $(CFLAGS) main.o isentropicFlow.o -o myApp 
 
 main.o: main.cpp isentropicFlow.h
 	$(CC) $(CFLAGS) -c main.cpp
 
-isentropicFlow.o: isentropicFlow.h
+isentropicFlow.o: isentropicFlow.cpp
+	$(CC) $(CFLAGS) -c isentropicFlow.cpp
 
 clean:
-	rm -f *.o app
+	rm -f *.o myApp

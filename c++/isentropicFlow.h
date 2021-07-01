@@ -1,15 +1,24 @@
-void MyFunc();
+class zustand {
+    private:
+	const double pi = 3.14159265359;
+	const double Gamma = 1.4;
+	const double gasConst = 287.058;
 
-double calc_machStar(double Ma);
+	int index;
+	double ma;
 
-double calc_TdT0(double Ma);
+	double machStar;
+	double TdT0;
+	double pdp0;
+	double rhodrho0;
+	double MachAngle;
+	double PM_Angle;
+	double AdAstar;
 
-double calc_pdp0(double Ma);
+    public:
+	// constructor declaration
+	zustand(int id, double mach);
 
-double calc_MachAngle(double Ma);
-
-double calc_PM_Angle(double Ma);
-
-// double calc_PM_Angle(double Ma);
-
-void printResults();
+	void calcResults();
+	void printResults();
+};
