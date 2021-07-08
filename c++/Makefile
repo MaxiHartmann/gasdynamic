@@ -12,14 +12,17 @@ CFLAGS=-g -Wall
 
 all: myApp
 
-myApp: main.o isentropicFlow.o
-	$(CC) $(CFLAGS) main.o isentropicFlow.o -o myApp 
+myApp: main.o isentropicFlow.o normalShock.o
+	$(CC) $(CFLAGS) main.o isentropicFlow.o normalShock.o -o myApp 
 
 main.o: main.cpp isentropicFlow.h
 	$(CC) $(CFLAGS) -c main.cpp
 
 isentropicFlow.o: isentropicFlow.cpp
 	$(CC) $(CFLAGS) -c isentropicFlow.cpp
+
+normalShock.o: normalShock.cpp
+	$(CC) $(CFLAGS) -c normalShock.cpp
 
 clean:
 	rm -f *.o myApp

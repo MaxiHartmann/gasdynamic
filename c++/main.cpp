@@ -1,5 +1,6 @@
 #include <iostream>
 #include "isentropicFlow.h"
+#include "normalShock.h"
 
 int main()
 {
@@ -25,6 +26,9 @@ int main()
 	// index,Typ und InputValue
 	zustand pos1(1, type, input);
 	pos1.printResults();
+
+	normalShock ns1(1, 1, 2.0);
+	ns1.printResults();
 
 	return 0;
 }
