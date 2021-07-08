@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>781</width>
+    <height>211</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Isentropic Flow Calculator</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="2">
+     <widget class="QPushButton" name="btn_calculate">
+      <property name="text">
+       <string>Calculate</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QComboBox" name="combobox_options"/>
+    </item>
+    <item row="0" column="3">
+     <widget class="QLabel" name="label_12">
+      <property name="text">
+       <string>Gamma = </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="led_INPUT">
+      <property name="text">
+       <string>2.0</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QLineEdit" name="led_gamma">
+      <property name="text">
+       <string>1.4</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="5">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Machnumber = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>p/p0 = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Mach angle = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>P-M angle = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QLineEdit" name="led_pmAngle"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>p/p* = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="led_machAngle"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="led_pdp0"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="led_machnumber"/>
+      </item>
+      <item row="2" column="5">
+       <widget class="QLineEdit" name="led_TdTstar"/>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLineEdit" name="led_rhodrho0"/>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="led_rhodrhostar"/>
+      </item>
+      <item row="1" column="5">
+       <widget class="QLineEdit" name="led_TdT0"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="led_pdpstar"/>
+      </item>
+      <item row="2" column="4">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>T/T* = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>T/T0 = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="6">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>A/A* = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>rho/rho0 = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>rho/rho* = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="7">
+       <widget class="QLineEdit" name="led_AdAstar"/>
+      </item>
+      <item row="0" column="6">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Ma* = </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QLineEdit" name="led_machStar"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
