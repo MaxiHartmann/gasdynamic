@@ -6,31 +6,32 @@ gamma = 1.4
 def calcMachnumber(Type, value):
     if (Type==0):
         machnumber = value;
-    if (Type==1):
+    elif (Type==1):
         TdT0 = value;
         machnumber = np.sqrt(2. / (gamma - 1.) * (1. / TdT0 - 1.));
-    if (Type==2):
+    elif (Type==2):
         pdp0 = value;
-        machnumber = np.sqrt(2. / (gamma - 1.) * 
+        machnumber = np.sqrt(2. / (gamma - 1.) *
             (np.power(pdp0, (1. - gamma) / gamma) - 1.));
-    if (Type==3):
+    elif (Type==3):
         rhodrho0 = value;
-        machnumber = np.sqrt(2. / (gamma - 1.) * 
+        machnumber = np.sqrt(2. / (gamma - 1.) *
             (np.power(rhodrho0, (1. - gamma) / 1.) - 1.));
-    if (Type==4):
+    elif (Type==4):
         AdAstar = value;
         machnumber = findMaFromAratio(AdAstar, "sub");
-    if (Type==5):
+    elif (Type==5):
         AdAstar = value;
         machnumber = findMaFromAratio(AdAstar, "sup");
-    if (Type==6):
+    elif (Type==6):
         MachAngle = value;
         machnumber = 1. / np.sin(MachAngle * np.pi / 180.)
-    if (Type==7):
+    elif (Type==7):
         PM_Angle = value;
         machnumber = findMaFromPM_Angle(PM_Angle)
     else:
         print("Using default: Ma = 2.0")
+        print("Type = {0}, value = {1}".format(Type, value))
         machnumber = 2.0
 
     return machnumber
@@ -39,10 +40,10 @@ def findMaFromAratio(Aratio, flowType):
     dM = 0.1
     M = 1e-6
 
-    if (flowType == "sub"): 
+    if (flowType == "sub"):
         M = 1e-6;
         # print("Choose Ma = 1e-6 for subsonic")
-    if (flowType == "sup"): 
+    if (flowType == "sup"):
         M = 1.0;
         # print("Choose Ma = 1.0 for supersonic")
 
@@ -61,9 +62,9 @@ def findMaFromAratio(Aratio, flowType):
             fjp1 = calc_AdAstar(M + dM) - Aratio
 
             # updating: depending on sign
-            if (fj * fjp1 > 0): 
+            if (fj * fjp1 > 0):
                 M = M + dM;
-            else: 
+            else:
                 dM = dM * 0.1
                 break
 
@@ -90,9 +91,9 @@ def findMaFromPM_Angle(PM_Angle):
             fjp1 = calc_PM_Angle(M + dM) - PM_Angle
 
             # updating: depending on sign
-            if (fj * fjp1 > 0): 
+            if (fj * fjp1 > 0):
                 M = M + dM;
-            else: 
+            else:
                 dM = dM * 0.1
                 # break j-loop
                 break
@@ -131,11 +132,11 @@ def calc_MachAngle(Ma):
     return result
 
 def calc_PM_Angle(Ma):
-#     result = (np.sqrt((gamma + 1.) / (gamma - 1.)) 
-#             * np.arctan(np.sqrt((gamma - 1.) / (gamma + 1.) 
+#     result = (np.sqrt((gamma + 1.) / (gamma - 1.))
+#             * np.arctan(np.sqrt((gamma - 1.) / (gamma + 1.)
 #                 * (Ma * Ma - 1.))) - np.arctan(np.sqrt(Ma*Ma - 1.))) *
 #         180. / np.pi
-    result = (np.sqrt((gamma + 1.) / (gamma - 1.)) 
-            * np.arctan(np.sqrt((gamma - 1.)/(gamma + 1.) 
+    result = (np.sqrt((gamma + 1.) / (gamma - 1.))
+            * np.arctan(np.sqrt((gamma - 1.)/(gamma + 1.)
                 * (Ma * Ma - 1.))) - np.arctan(np.sqrt(Ma*Ma - 1.))) * 180. / np.pi
     return result
