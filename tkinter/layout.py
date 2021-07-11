@@ -2,7 +2,7 @@ import tkinter as tk
 
 #==================== Frames ====================  
 root = tk.Tk()
-root.geometry('1200x600+10+10')
+# root.geometry('1200x600+10+10')
 
 inputFrame = tk.Frame(root, bg='green', width=1200, height=100)
 inputFrame.pack(side=tk.TOP, fill=tk.X,)
@@ -11,15 +11,24 @@ resultsFrame = tk.Frame(root, bg='blue', width=1200, height=500)
 resultsFrame.pack(side=tk.BOTTOM, fill=tk.BOTH)
 
 #====================Variables ====================  
-txt_val1 = tk.StringVar()
-txt_val2 = tk.StringVar()
-txt_val3 = tk.StringVar()
-txt_val4 = tk.StringVar()
+txt_INPUT = tk.StringVar()
+
+txt_Machnumber = tk.StringVar(value="2.0")
+txt_MachAngle = tk.StringVar()
+txt_PM_Angle = tk.StringVar()
+txt_pdp0 = tk.StringVar()
+txt_pdpStar = tk.StringVar()
+txt_rhodrho0 = tk.StringVar()
+txt_rhodrhoStar = tk.StringVar()
+txt_TdT0 = tk.StringVar()
+txt_TdTstar = tk.StringVar()
+txt_AdAstar = tk.StringVar()
+txt_MachStar = tk.StringVar()
+
 # ...
 
 #====================Methods ====================  
 def calc():
-    print("Calculate...")
     print("Machnumber = {}".format(led_1.get()))
     led_2.delete(0,tk.END)
     led_2.insert(0,"{:.04f}".format(float(led_1.get())))
@@ -31,7 +40,7 @@ lbl_name = tk.Label(inputFrame, text="Isentropic Flow Calculator",
 lbl_name.grid(row=0, column=0)
 lbl_input = tk.Label(inputFrame, text="INPUT:")
 lbl_input.grid(row=1, column=0)
-led_1 = tk.Entry(inputFrame, text="2.0")
+led_1 = tk.Entry(inputFrame, textvariable=txt_Machnumber)
 led_1.grid(row=1, column=1)
 btn_calc = tk.Button(inputFrame, text="Calculate", fg="red", command=calc)
 btn_calc.grid(row=1, column=2)
@@ -80,10 +89,6 @@ led_10 = tk.Entry(resultsFrame, text="")
 led_10.grid(row=1, column=7)
 led_11 = tk.Entry(resultsFrame, text="")
 led_11.grid(row=2, column=7)
-
-
-
-
 
 root.mainloop()
 

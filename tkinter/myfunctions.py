@@ -119,7 +119,7 @@ def calc_MaStar(Ma):
     result = np.sqrt(( gamma + 1.)/ (2. / (Ma*Ma) + gamma -1.))
     return result
 
-def calc_dpd0(Ma):
+def calc_pdp0(Ma):
     result = (1 + (gamma - 1) / 2 * Ma**2)**(-gamma / (gamma - 1))
     return result
 
