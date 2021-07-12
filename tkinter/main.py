@@ -24,8 +24,7 @@ Ma = 2.0
 # CALCULATION
 MaStar = calc_MaStar(Ma)
 TRatio = calc_TdT0(Ma)
-pRatio = calc_dpd0(Ma)
-rhoRatio = (1 + (gamma - 1) / 2 * Ma**2)**(-1 / (gamma - 1))
+pRatio = calc_pdp0(Ma)
 rhoRatio = calc_rhodrho0(Ma)
 AdAstar = calc_AdAstar(Ma)
 MachAngle = calc_MachAngle(Ma)
@@ -42,7 +41,6 @@ p_pstar = rho_rhoStar * T_Tstar
 # print("p/pt     = {:.05f}".format(pRatio))
 # print("rho/rhot = {:.05f}".format(rhoRatio))
 # print("T/Tt     = {:.05f}".format(TRatio))
-# 
 # print("p/p*     = {:.05f}".format(p_pstar))
 # print("rho/rho* = {:.05f}".format(rho_rhoStar))
 # print("T/T*     = {:.05f}".format(T_Tstar))
@@ -56,52 +54,3 @@ print("Ma(4(sub), 1.5) = {:.05f}".format(calcMachnumber(4, 1.5)))
 print("Ma(5(sup), 1.5) = {:.05f}".format(calcMachnumber(5, 1.5)))
 print("Ma(6, 30) = {:.05f}".format(calcMachnumber(6, 30)))
 print("Ma(7, 26.3798) = {:.05f}".format(calcMachnumber(7, 26.3797608)))
-
-
-#********** GUI ********** 
-
-import tkinter as tk
-
-class App:
-    def __init__(self, root):
-        root.title("Perfect Gas Calculator")
-        width=600
-        height=500
-        screenwidth = root.winfo_screenwidth()
-        screenheight = root.winfo_screenheight()
-        alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
-        root.geometry(alignstr)
-        root.resizable(width=False, height=False)
-
-
-        lbl_input=tk.Label(root, text="INPUT: ")
-        lbl_input.grid(row=0, column=0)
-
-        OptionList = [
-                "Machnumber",
-                "Taurus",
-                "Gemini",
-                "Cancer"
-                ] 
-        variable = tk.StringVar(root)
-        variable.set(OptionList[0])
-        lsbox_1=tk.OptionMenu(root,variable, *OptionList, command=self.display_selected)
-        lsbox_1.grid(row=0, column=1)
-
-        led_INPUT=tk.Entry(root, text="2.0")
-        led_INPUT.grid(row=0, column=2)
-
-        btn_calc=tk.Button(root, text="Calculate",command=self.calc)
-        btn_calc.grid(row=0, column=3)
-
-    def calc(self):
-        print("command")
-
-    def display_selected(self, choice):
-        print(choice)
-
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = App(root)
-    root.mainloop()

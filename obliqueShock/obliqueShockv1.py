@@ -53,12 +53,25 @@ fix, ax = plt.subplots(figsize=(8,8))
 
 # geometry
 height=np.sin(beta)
-pts_x=[-1, 0, 1, 2]
+pts_x=[-2, 0, 1, 2]
 pts_y=[0, 0, height, height]
 ax.plot(pts_x, pts_y, label='wall', color='black')
 
 # Shock
 ax.plot([0,np.cos(sigma)*3], [0, np.sin(sigma)*3], 'r-.', label='shock')
+
+# 
+pointX = 0.5
+pointY = 0.5*np.sin(sigma)/np.cos(sigma)
+ax.plot(pointX, pointY, 'b*', label='Point ')
+
+X = np.array((pointX-Ma1))
+Y= np.array((pointY))
+U = np.array((Ma1))
+V = np.array((0))
+
+q = ax.quiver(X, Y, U, V,units='xy' ,scale=1)
+
 
 
 # V = np.array([[1,1], [-2,2], [4,-7]])
@@ -66,6 +79,6 @@ ax.plot([0,np.cos(sigma)*3], [0, np.sin(sigma)*3], 'r-.', label='shock')
 # 
 # plt.quiver(*origin, V[:,0], V[:,1], color=['r','b','g'], scale=21)
 ax.axis('equal')
-ax.set_xlim(-1,2)
+ax.set_xlim(-2,2)
 # ax.set_ylim(-0.1,2)
 plt.show()

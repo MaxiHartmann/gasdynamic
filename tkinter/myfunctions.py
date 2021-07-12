@@ -1,5 +1,6 @@
 # myfunctions.py
 import numpy as np
+import math
 
 gamma = 1.4
 
@@ -28,7 +29,9 @@ def calcMachnumber(Type, value):
         machnumber = 1. / np.sin(MachAngle * np.pi / 180.)
     elif (Type==7):
         PM_Angle = value;
-        machnumber = findMaFromPM_Angle(PM_Angle)
+        # machnumber = findMaFromPM_Angle(PM_Angle)
+        # with regula_falsi:
+        machnumber = findMaFromPM_Angle2(PM_Angle)
     else:
         print("Using default: Ma = 2.0")
         print("Type = {0}, value = {1}".format(Type, value))
@@ -52,11 +55,7 @@ def findMaFromAratio(Aratio, flowType):
     stepMax = 100;
     errTol = 1e-5;
 
-    # i = 1
-    # j = 1
-    # while i < iterMax:
     for i in range(1, iterMax):
-        # while j < stepMax:
         for j in range(1, stepMax):
             fj = calc_AdAstar(M) - Aratio
             fjp1 = calc_AdAstar(M + dM) - Aratio
@@ -71,10 +70,26 @@ def findMaFromAratio(Aratio, flowType):
         # checking convergence
         if (abs(fj - fjp1) <= errTol):
             break
-        # print("i = " + str(i) + " j= " + str(j))
-        # print("Error = " + str(abs(fj - fjp1)) + "   Mach = " +str(M))
 
     return M
+
+
+# Doesn't work!!! Quadratic Function calc_AdAstar
+# def findMaFromAratio2(Aratio, flowType):
+#     Ma_min=0.
+#     Ma_max=0.
+#     if (flowType == "sub"):
+#         Ma_min = 1e-6;
+#         Ma_max = 0.999;
+#     if (flowType == "sup"):
+#         Ma_min  = 1.00001;
+#         Ma_max  = 30.0;
+#     iterations=30
+#     tolerance=1e-6
+#     print("Ma_min = {}, Ma_max={}, iterations={}, tol={}, Aratio={}".format(Ma_min, Ma_max,iterations,tolerance,Aratio))
+#     Ma = regula_falsi(calc_AdAstar, Ma_min, Ma_max,iterations,
+#             tolerance, Aratio)
+#     return Ma
 
 def findMaFromPM_Angle(PM_Angle):
     dM = 0.1
@@ -105,6 +120,12 @@ def findMaFromPM_Angle(PM_Angle):
 
     return M
 
+def findMaFromPM_Angle2(PM_Angle):
+    Ma_min=1.0
+    Ma_max=50.0
+    Ma = regula_falsi(calc_PM_Angle, Ma_min, Ma_max,30, 1e-6, PM_Angle)
+    return Ma
+
 def calc_AdAstar(Ma):
     result = 1. / (Ma * np.power((2. / (gamma + 1.) *
         (1. + (gamma - 1.) / 2. * Ma * Ma)),
@@ -132,11 +153,39 @@ def calc_MachAngle(Ma):
     return result
 
 def calc_PM_Angle(Ma):
-#     result = (np.sqrt((gamma + 1.) / (gamma - 1.))
-#             * np.arctan(np.sqrt((gamma - 1.) / (gamma + 1.)
-#                 * (Ma * Ma - 1.))) - np.arctan(np.sqrt(Ma*Ma - 1.))) *
-#         180. / np.pi
     result = (np.sqrt((gamma + 1.) / (gamma - 1.))
             * np.arctan(np.sqrt((gamma - 1.)/(gamma + 1.)
                 * (Ma * Ma - 1.))) - np.arctan(np.sqrt(Ma*Ma - 1.))) * 180. / np.pi
     return result
+
+
+def regula_falsi(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
+    '''Calculate x for (f(x)-target)=0 of a function:
+    Inputs:
+        func: Function(x)
+        a,b :  Boundaries of search interval
+        max_steps: limit for number of iterations
+        tolerance: Convergence Criteria
+        target: target Value: f(x)-target = 0
+    Returns:
+        p: Position x of (func(x)-target)=0
+    HINT:
+    - Finds only one position
+    - Position must be in given interval a,b
+    '''
+    x = 0.0
+    for loopCount in range(max_steps):
+        func_a = func(a) - target
+        func_b = func(b) - target
+        x = b - (func_b * ((a-b)/(func_a-func_b)))
+        # print("Current approximation is {:.05f}".format(x))
+        if math.copysign(func_a, func_b) != func_a:
+            b = x
+        else:
+            a = x
+        if abs(func(x)-target) < tolerance:
+            # print ("Root is {:.05f} ({} iterations)".format(x, loopCount))
+            return x
+    # print("Root find cancelled at {:.05f} ({} iterations)".format(x, loopCount))
+    return x
+
