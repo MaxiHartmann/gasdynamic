@@ -34,7 +34,7 @@ def calcMachnumber(Type, value):
         machnumber = findMaFromPM_Angle2(PM_Angle)
     else:
         print("Using default: Ma = 2.0")
-        print("Type = {0}, value = {1}".format(Type, value))
+        # print("Type = {0}, value = {1}".format(Type, value))
         machnumber = 2.0
 
     return machnumber
@@ -72,7 +72,6 @@ def findMaFromAratio(Aratio, flowType):
             break
 
     return M
-
 
 # Doesn't work!!! Quadratic Function calc_AdAstar
 # def findMaFromAratio2(Aratio, flowType):
@@ -149,10 +148,16 @@ def calc_rhodrho0(Ma):
     return result
 
 def calc_MachAngle(Ma):
+    if(Ma<1.0):
+        print("Ma < 1.0: no P-M angle in subsonic flow")
+        return np.nan
     result = np.arcsin( 1. / Ma) * 180. / np.pi
     return result
 
 def calc_PM_Angle(Ma):
+    if(Ma<1.0):
+        print("Ma < 1.0: no Mach angle in subsonic flow")
+        return np.nan
     result = (np.sqrt((gamma + 1.) / (gamma - 1.))
             * np.arctan(np.sqrt((gamma - 1.)/(gamma + 1.)
                 * (Ma * Ma - 1.))) - np.arctan(np.sqrt(Ma*Ma - 1.))) * 180. / np.pi
@@ -188,4 +193,3 @@ def regula_falsi(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
             return x
     # print("Root find cancelled at {:.05f} ({} iterations)".format(x, loopCount))
     return x
-
