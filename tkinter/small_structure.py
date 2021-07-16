@@ -1,11 +1,3 @@
-# import matplotlib
-# matplotlib.use("TkAgg")
-# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-# from matplotlib.figure import Figure
-# import matplotlib.animation as animation
-# from matplotlib import style
-
-
 """
 
 TODO: 
@@ -22,27 +14,6 @@ from tkinter import ttk
 from myfunctions import *
 
 LARGE_FONT=("Verdana", 12)
-# style.use("dark_background")
-
-# Plotting:
-# f = Figure(figsize=(5,5), dpi=100)
-# a = f.add_subplot(111)
-# # a.plot([1,2,3,4,5,6,7,8], [5,6,1,3,8,9,3,5])
-# 
-# 
-# def animate(i):
-#     pullData = open("sampleData.txt", "r").read()
-#     dataList = pullData.split('\n')
-#     xList = []
-#     yList = []
-#     for eachLine in dataList:
-#         if len(eachLine) > 1:
-#             x, y = eachLine.split(',')
-#             xList.append(int(x))
-#             yList.append(int(y))
-# 
-#     a.clear()
-#     a.plot(xList, yList)
 
 class SeaofBTCapp(tk.Tk):
     
@@ -72,6 +43,18 @@ class SeaofBTCapp(tk.Tk):
 
         frame = self.frames[cont]
         frame.tkraise()
+
+
+# Example: How to reach tk-widgets from outside of class:
+def reset(self):
+    print(self)
+    self.led_2.delete(0,tk.END)
+    self.led_3.delete(0,tk.END)
+    self.led_4.delete(0,tk.END)
+
+def testFunction(self):
+    print("TEST-Function")
+    self.testLabel.config(text="xxx")
 
 
 class StartPage(tk.Frame):
@@ -113,17 +96,15 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         #==================== Frames ====================  
+        button1 = ttk.Button(self, text="Back to Home",
+                command=lambda: controller.show_frame(StartPage))
+        button1.pack(side=tk.TOP)
+
         inputFrame = tk.Frame(self, bg='green', width=1200)
         inputFrame.pack(side=tk.TOP, fill=tk.X)
-        label = tk.Label(self, text="Isentropic Flow Relations", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
 
         resultsFrame = tk.Frame(self, bg='blue', width=1200, height=500)
         resultsFrame.pack(side=tk.BOTTOM, fill=tk.BOTH)
-
-        button1 = ttk.Button(self, text="Back to Home",
-                command=lambda: controller.show_frame(StartPage))
-        button1.pack()
 
         #====================Variables ====================  
         txt_inputValue = tk.StringVar(value="2.0")
@@ -140,6 +121,14 @@ class PageOne(tk.Frame):
         values=my_dict1.values()
 
         txt_inputType = tk.StringVar(inputFrame, value=my_dict1[0])
+
+        # TEST:
+        self.testButton = tk.Button(self, text="TEST :::", bg='yellow', 
+                command=lambda: testFunction(self))
+        # self.testButton.bind('<Button-1>', lambda: testFunction(self, event))
+        self.testButton.pack()
+        self.testLabel = tk.Label(self, text="TEST :::", bg='yellow')
+        self.testLabel.pack()
 
         #====================Methods ====================  
         def calc():
@@ -164,24 +153,9 @@ class PageOne(tk.Frame):
             pdpstar = rho_rhoStar * T_Tstar
 
             # column=0
-            led_2.insert(0,"{:.07f}".format(Ma))
-            led_3.insert(0,"{:.07f}".format(pdp0))
-            led_4.insert(0,"{:.07f}".format(pdpstar))
-
-            # column=1
-            led_5.insert(0,"{:.07f}".format(MachAngle))
-            led_6.insert(0,"{:.07f}".format(rhodrho0))
-            led_7.insert(0,"{:.07f}".format(rho_rhoStar))
-
-            # column=2
-            led_8.insert(0,"{:.07f}".format(PM_angle))
-            led_9.insert(0,"{:.07f}".format(TRatio))
-            led_10.insert(0,"{:.07f}".format(T_Tstar))
-
-            # column=3
-            led_MaStar.insert(0,"{:.07f}".format(MaStar))
-            # led_11.insert(...)
-            led_AdAstar.insert(0,"{:.07f}".format(AdAstar))
+            self.led_2.insert(0,"{:.07f}".format(Ma))
+            self.led_3.insert(0,"{:.07f}".format(pdp0))
+            self.led_4.insert(0,"{:.07f}".format(pdpstar))
 
         def get_idx_fromOptionMenu(search_key):
             for idx, option in my_dict1.items():
@@ -189,24 +163,10 @@ class PageOne(tk.Frame):
                     # print("idx = {}, search_key= {}".format(idx, option))
                     return idx
 
-        def reset():
-            led_2.delete(0,tk.END)
-            led_3.delete(0,tk.END)
-            led_4.delete(0,tk.END)
-            led_5.delete(0,tk.END)
-            led_6.delete(0,tk.END)
-            led_7.delete(0,tk.END)
-            led_8.delete(0,tk.END)
-            led_9.delete(0,tk.END)
-            led_10.delete(0,tk.END)
-            led_AdAstar.delete(0,tk.END)
-            led_MaStar.delete(0,tk.END)
-
-        # def my_show(*args):
-        #     for i,j in my_dict1.items():
-        #         if j == txt_inputType.get():
-        #             int_inputType = i
-        #             # print(int_inputType)
+        # def reset():
+        #     self.led_2.delete(0,tk.END)
+        #     self.led_3.delete(0,tk.END)
+        #     self.led_4.delete(0,tk.END)
 
         #====================INPUT Line====================  
         lbl_name = tk.Label(inputFrame, text="Isentropic Flow Calculator",
@@ -227,60 +187,27 @@ class PageOne(tk.Frame):
         btn_calc = tk.Button(inputFrame, text="Calculate", fg="red", 
                 command=calc)
         btn_calc.grid(row=1, column=3)
+        self.btn_reset = tk.Button(inputFrame, text="RESET", fg="red", 
+                command=lambda: reset(self))
+        self.btn_reset.grid(row=2, column=3)
         #====================Results Frame====================  
-        label2 = tk.Label(resultsFrame, text="Machnumber =").grid(row=0, column=0, sticky=tk.E)
-        label3 = tk.Label(resultsFrame, text="p/p0 =").grid(row=1, column=0, sticky=tk.E)
-        label4 = tk.Label(resultsFrame, text="p/p* =").grid(row=2, column=0, sticky=tk.E)
+        label2 = tk.Label(resultsFrame, text="Machnumber =")
+        label2.grid(row=0, column=0, sticky=tk.E)
+        label3 = tk.Label(resultsFrame, text="p/p0 =")
+        label3.grid(row=1, column=0, sticky=tk.E)
+        label4 = tk.Label(resultsFrame, text="p/p* =")
+        label4.grid(row=2, column=0, sticky=tk.E)
 
-        led_2 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_2.grid(row=0, column=1)
-        led_3 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_3.grid(row=1, column=1)
-        led_4 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_4.grid(row=2, column=1)
+        self.led_2 = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.led_2.grid(row=0, column=1)
+        self.led_3 = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.led_3.grid(row=1, column=1)
+        self.led_4 = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.led_4.grid(row=2, column=1)
 
-        label5 = tk.Label(resultsFrame, text="Mach angle =")
-        label5.grid(row=0, column=2, sticky=tk.E)
-        label6 = tk.Label(resultsFrame, text="rho/rho0 =")
-        label6.grid(row=1, column=2, sticky=tk.E)
-        label7 = tk.Label(resultsFrame, text="rho/rho* =")
-        label7.grid(row=2, column=2, sticky=tk.E)
-
-        led_5 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_5.grid(row=0, column=3)
-        led_6 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_6.grid(row=1, column=3)
-        led_7 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_7.grid(row=2, column=3)
-
-        label8 = tk.Label(resultsFrame, text="P-M angle =")
-        label8.grid(row=0, column=4, sticky=tk.E)
-        label9 = tk.Label(resultsFrame, text="T/T0 =")
-        label9.grid(row=1, column=4, sticky=tk.E)
-        label10 = tk.Label(resultsFrame, text="T/T* =")
-        label10.grid(row=2, column=4, sticky=tk.E)
-
-        led_8 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_8.grid(row=0, column=5)
-        led_9 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_9.grid(row=1, column=5)
-        led_10 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_10.grid(row=2, column=5)
-
-        label11 = tk.Label(resultsFrame, text="Ma* =")
-        label11.grid(row=0, column=6, sticky=tk.E)
-        label12 = tk.Label(resultsFrame, text="...")
-        label12.grid(row=1, column=6, sticky=tk.E)
-        label13 = tk.Label(resultsFrame, text="A/A* =")
-        label13.grid(row=2, column=6, sticky=tk.E)
-
-        led_MaStar = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_MaStar.grid(row=0, column=7)
-        led_11 = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_11.grid(row=1, column=7)
-        led_AdAstar = tk.Entry(resultsFrame, text="", justify='right', width=12)
-        led_AdAstar.grid(row=2, column=7)
-
+#================================================================================
+#==========      Page Two        ==================================================
+#================================================================================
 
 class PageTwo(tk.Frame):
 

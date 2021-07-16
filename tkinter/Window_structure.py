@@ -1,11 +1,3 @@
-# import matplotlib
-# matplotlib.use("TkAgg")
-# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-# from matplotlib.figure import Figure
-# import matplotlib.animation as animation
-# from matplotlib import style
-
-
 """
 
 TODO: 
@@ -22,27 +14,6 @@ from tkinter import ttk
 from myfunctions import *
 
 LARGE_FONT=("Verdana", 12)
-# style.use("dark_background")
-
-# Plotting:
-# f = Figure(figsize=(5,5), dpi=100)
-# a = f.add_subplot(111)
-# # a.plot([1,2,3,4,5,6,7,8], [5,6,1,3,8,9,3,5])
-# 
-# 
-# def animate(i):
-#     pullData = open("sampleData.txt", "r").read()
-#     dataList = pullData.split('\n')
-#     xList = []
-#     yList = []
-#     for eachLine in dataList:
-#         if len(eachLine) > 1:
-#             x, y = eachLine.split(',')
-#             xList.append(int(x))
-#             yList.append(int(y))
-# 
-#     a.clear()
-#     a.plot(xList, yList)
 
 class SeaofBTCapp(tk.Tk):
     
@@ -113,17 +84,16 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         #==================== Frames ====================  
+        button1 = ttk.Button(self, text="Back to Home",
+                command=lambda: controller.show_frame(StartPage))
+        button1.pack(side=tk.TOP)
+
         inputFrame = tk.Frame(self, bg='green', width=1200)
         inputFrame.pack(side=tk.TOP, fill=tk.X)
-        label = tk.Label(self, text="Isentropic Flow Relations", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
 
         resultsFrame = tk.Frame(self, bg='blue', width=1200, height=500)
         resultsFrame.pack(side=tk.BOTTOM, fill=tk.BOTH)
 
-        button1 = ttk.Button(self, text="Back to Home",
-                command=lambda: controller.show_frame(StartPage))
-        button1.pack()
 
         #====================Variables ====================  
         txt_inputValue = tk.StringVar(value="2.0")

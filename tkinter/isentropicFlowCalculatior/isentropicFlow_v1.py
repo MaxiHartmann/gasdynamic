@@ -6,6 +6,7 @@ based on:
 
 http://www.dept.aoe.vt.edu/~devenpor/aoe3114/calc.html
 
+
 """
 
 # import numpy as np
@@ -21,13 +22,13 @@ import tkinter as tk
 
 #==================== Frames ====================  
 root = tk.Tk()
-# root.geometry('1200x600+10+10')
+root.geometry('800x200+10+10')
 
-inputFrame = tk.Frame(root, bg='green', width=1200)
+inputFrame = tk.Frame(root, bg='green')
 inputFrame.pack(side=tk.TOP, fill=tk.X)
 
-resultsFrame = tk.Frame(root, bg='blue', width=1200, height=500)
-resultsFrame.pack(side=tk.BOTTOM, fill=tk.BOTH)
+resultsFrame = tk.Frame(root, bg='blue')
+resultsFrame.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=tk.Y)
 
 #====================Variables ====================  
 txt_inputValue = tk.StringVar(value="2.0")
@@ -105,12 +106,6 @@ def reset():
     led_10.delete(0,tk.END)
     led_AdAstar.delete(0,tk.END)
     led_MaStar.delete(0,tk.END)
-
-# def my_show(*args):
-#     for i,j in my_dict1.items():
-#         if j == txt_inputType.get():
-#             int_inputType = i
-#             # print(int_inputType)
 
 #====================INPUT Line====================  
 lbl_name = tk.Label(inputFrame, text="Isentropic Flow Calculator",
