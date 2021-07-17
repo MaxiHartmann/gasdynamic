@@ -40,6 +40,9 @@ def calc_MaFromMaStar(MaStar, gamma=1.4):
     result = np.sqrt(2. / ((gamma + 1.) / MaStar**2. - ( gamma -1.)))
     return result
 
+#
+# ROOT-Finding methods: regula_falsi, bisection and secant
+#
 def regula_falsi(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
     '''Calculate x for (f(x)-target)=0 of a function:
     Inputs:
@@ -71,6 +74,9 @@ def regula_falsi(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
     return x
 
 def bisection(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
+    """
+    slower convergence than secant or regula-falsi
+    """
     func_a = func(a) - target
     func_b = func(b) - target
 
@@ -100,6 +106,38 @@ def bisection(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
 
     print("The value of root is : {:.06f} ({} iter)".format(c, counter))
     return c
+
+def secant(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
+    """
+
+    similiar to regula-falsi but can find root outside of [a,b] interval
+    through not as stable as regula-falsi if function can is not continuous
+
+    """
+    func_a = func(a) - target
+    func_b = func(b) - target
+    iteration_counter = 0
+
+    # list_secant = []
+    while abs(func_b) > tolerance and iteration_counter < max_steps:
+        try:
+            x = b - float(func_b) * (b-a) / float(func_b - func_a)
+        except ZeroDivisionError:
+            print("Error! - denominator zero for x = ", x)
+            sys.exit(1) 
+        a = b
+        b = x
+        func_a = func_b
+        func_b = func(b)-target
+        iteration_counter += 1
+        print("i = {}, x = {}".format(iteration_counter, x))
+        print(abs(func_b), tolerance)
+        # list_secant = np.append(list_secant, x)
+
+    # Here, either a solution is found, or too many iterations
+    if abs(func_b) > tolerance:
+        iteration_counter = -1
+    return x, iteration_counter #, list_secant
 
 # ===================== different ways to get Machnumber =======================================
 def calcInflowMachnumber(Type, value, gamma=1.4):
@@ -134,21 +172,26 @@ def calcInflowMachnumber(Type, value, gamma=1.4):
                 print("T2/T1 must be greater than 1")
                 return np.nan
         # Solve Iterative
-        mach_1 = bisection(calc_T2dT1, 1., 20., 20, 1e-6, T2dT1)
+        # mach_1 = bisection(calc_T2dT1, 1., 20., 20, 1e-6, T2dT1)
+        mach_1 = regula_falsi(calc_T2dT1, 1., 20., 20, 1e-6, T2dT1)
+        # mach_1, i = secant(calc_T2dT1, 1., 20., 20, 1e-7, T2dT1)
     elif (Type==5):
         p02dp01 = value;
         if (p02dp01 > 1.):
                 print("p02/p01 must be between 0 and 1")
                 return np.nan
         # Solve Iterative
-        mach_1 = bisection(calc_p02dp01, 1., 20., 100, 1e-6, p02dp01)
+        mach_1 = regula_falsi(calc_p02dp01, 1., 20., 100, 1e-6, p02dp01)
+        # mach_1 = bisection(calc_p02dp01, 1., 20., 100, 1e-6, p02dp01)
+        # mach_1, i = secant(calc_p02dp01, 1., 20., 100, 1e-7, p02dp01)
     elif (Type==6):
         p1dp02 = value;
         if (p1dp02 < 0. or p1dp02 > 0.52828178):
                 print("p1/p02 must be between 0 and  0.52828178")
                 return np.nan
         # Solve Iterative
-        mach_1 = bisection(calc_p1dp02, 1., 20., 100, 1e-6, p1dp02)
+        # mach_1 = bisection(calc_p1dp02, 1., 20., 100, 1e-6, p1dp02)
+        mach_1 = regula_falsi(calc_p1dp02, 1., 20., 100, 1e-6, p1dp02)
     else:
         print("Using default: Ma1 = 2.0")
         mach_1 = 2.0

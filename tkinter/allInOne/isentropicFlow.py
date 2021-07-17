@@ -47,11 +47,9 @@ def calcMachnumber(Type, value, gamma=1.4):
         if (PM_Angle >= 130.454076):
             print('Prandtl-Meyer angle must be between 0 and 130.454076')
             return np.nan
-        # with regula_falsi:
         machnumber = findMaFromPM_Angle2(PM_Angle)
     else:
         print("Using default: Ma = 2.0")
-        # print("Type = {0}, value = {1}".format(Type, value))
         machnumber = 2.0
 
     return machnumber
@@ -122,7 +120,10 @@ def findMaFromPM_Angle(PM_Angle):
 def findMaFromPM_Angle2(PM_Angle):
     Ma_min=1.0
     Ma_max=50.0
-    Ma = regula_falsi(calc_PM_Angle, Ma_min, Ma_max,30, 1e-8, PM_Angle)
+    Ma = regula_falsi(calc_PM_Angle, Ma_min, Ma_max, 30, 1e-8, PM_Angle)
+    
+    # not stable: because calc_PM_Angle is not continuous
+    # Ma, i = secant(calc_PM_Angle, Ma_min, Ma_max, 30, 1e-8, PM_Angle)
     return Ma
 
 def calc_AdAstar(Ma, gamma=1.4):
@@ -192,3 +193,37 @@ def regula_falsi(func, a, b, max_steps=100, tolerance=1e-6, target=0.):
             return x
     print("Root find cancelled at {:.08f} ({} iterations)".format(x, loopCount))
     return x
+
+
+
+def secant(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
+    """
+
+    similiar to regula-falsi but can find root outside of [a,b] interval
+    through not as stable as regula-falsi if function can is not continuous
+
+    """
+    func_a = func(a) - target
+    func_b = func(b) - target
+    iteration_counter = 0
+
+    # list_secant = []
+    while abs(func_b) > tolerance and iteration_counter < max_steps:
+        try:
+            x = b - float(func_b) * (b-a) / float(func_b - func_a)
+        except ZeroDivisionError:
+            print("Error! - denominator zero for x = ", x)
+            sys.exit(1) 
+        a = b
+        b = x
+        func_a = func_b
+        func_b = func(b)-target
+        iteration_counter += 1
+        print("i = {}, x = {}".format(iteration_counter, x))
+        print(abs(func_b), tolerance)
+        # list_secant = np.append(list_secant, x)
+
+    # Here, either a solution is found, or too many iterations
+    if abs(func_b) > tolerance:
+        iteration_counter = -1
+    return x, iteration_counter #, list_secant
