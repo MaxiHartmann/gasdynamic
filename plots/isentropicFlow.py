@@ -1,4 +1,3 @@
-# myfunctions.py
 import numpy as np
 import math
 
@@ -163,7 +162,6 @@ def calc_PM_Angle(Ma, gamma=1.4):
             * np.arctan(np.sqrt((gamma - 1.)/(gamma + 1.)
                 * (Ma * Ma - 1.))) - np.arctan(np.sqrt(Ma*Ma - 1.))) * 180. / np.pi
     return result
-
 
 def regula_falsi(func, a, b, max_steps=100, tolerance=1e-6, target=0.):
     '''Calculate x for (f(x)-target)=0 of a function:
