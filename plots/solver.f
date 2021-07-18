@@ -1,0 +1,70 @@
+C does not work!!!
+
+SUBROUTINE OBLIQUE (EM1, THETA, BETA, EM2, GAMA, IFL) 
+C EM1 - FREESTREAM MACH NUMBER 
+C THETA - FLOW DEFLECTION ANGLE (in DEGREES) 
+C BETA - SHOCK ANGLE  
+C GAMA - RATIO OF SPECIFIC HEATS 
+C EM2 - MACH NUMBER AFTER SHOCK 
+C IFL - PARAMETER = 0 FOR ATTACHED SHOCK IFL - PARAMETER = 1  
+C FOR DETACHED SHOCK (FLOW PROBLEM HAS TO SOLVE SEPARATELY) 
+C THETA = 90 deg FOR THE NORMAL SHOCK  
+      RM(X) = SQRT((GM1*X*X+2.)/(2.*G*X*X-GM1))
+      EM2=EM1
+      IF (EM1.LT.1.) RETURN
+      IF (THETA.EQ.0.) RETURN
+      IFL=0
+      PI=3.14159265
+      THI=THETA*PI/180
+      G=GAMA
+      GP1=G+1
+      GM1=G-1
+      IF (THETA.EQ.90.) GO TO 6
+      C=2./GM1*COS(THI)/SIN(THI)/(EM1*EM1+2./GM1)
+      B=(GP1/GM1*EM1*EM1+2./GM1)/(EM1*EM1+2./GM1)
+      A=C*(1.-EM1*EM1)
+      P=-A*A/3.+B
+      Q=2.*A*A*A/27.-A*B/3.+C
+      QQ=(P/3.)**3+(Q/2.)**2
+      IF (QQ.LT.0.) GO TO 1
+      QQ=SQRT(QQ)
+      A1=QQ-Q/2.
+      B1=-QQ-Q/2.
+      A1=A1/ABS(A1)*ABS(A1)**(1./3.)
+      B1=B1/ABS(B1)*ABS(B1)**(1./3.)
+      B1=A1+B1-A/3.
+      B1=ATAN(B1)
+      IF (B1.GT.0.) GO TO 5
+      WRITE (7.100) THETA
+100   FORMAT ('DEFLECTION',F10.6,' IS GREATER THAN MAX DEFLECTION') 
+      IFL=1
+      RETURN
+1     B1=SQRT(-P/3.)
+      A1=-Q/2./B1**3
+      A1=ACOS(A1)
+      Z1=2.*B1*COS(A1/3.)-A/3.
+      Z2=-2.*B1*COS(A1/3.+P1/3.)-A/3.
+      Z3=-2.*B1*COS(A1/3.-PI/3.)-1/3.
+      IF (Z2.GT.Z1)GO TO 2
+      A1=Z1
+      Z1=Z2
+      Z2=A1
+2     IF (Z3.GT.Z1) GO TO 3
+      A1=Z1
+      Z1=Z3
+      Z3=A1
+3     IF(Z3.LT.0.)WRITE(7,100)
+      IF(Z3.LT.0)IFL=1
+      IF(Z3.LT.0)RETURN
+      B1=ATAN(Z2)
+5     BETA=B1*180./PI
+      RM1=EM1*SIN(B1) 
+      EM2=RM(RM1) 
+      EM2=EM2/(SIN(B1-TH1) 
+      GO TO 7 
+6     BETA=90. 
+      RM1=EM1 
+      EM2=RM(RM1) 
+7     RR1=RR(RM1) 
+      RETURN 
+      END
