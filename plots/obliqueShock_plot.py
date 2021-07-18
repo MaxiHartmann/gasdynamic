@@ -59,8 +59,12 @@ def calc_Ma2(Ma1, sigma, beta, gamma=1.4):
             (2*gamma*Ma1*Ma1*np.sin(sigma)**2 - (gamma - 1)))
     return Ma2
 
-def find_sigma_12(Ma1, gamma=1.4):
-    pass
+def find_sigma_12(Ma1, beta, gamma=1.4):
+    ls_sigma = np.linspace(calc_sigMin(Ma1), 90, 100)
+    ls_beta = calc_beta(Ma1, sigma, 1.4)
+
+
+
 
 
 def calc_sigma(Ma1, inputType, inputValue, gamma=1.4):
@@ -102,8 +106,12 @@ def calc_betaMax(Ma1, gamma):
     dSig = 2
     betaMin = 0.
     betaMax = 50.
-    sigMax = 90.
     sigMin = np.arcsin(1./Ma1)*180./pi
+    sigMax = 90.
+
+    # first estimate:
+    # betaMax = max(calc_beta(Ma1, np.linspace(sigMin,sigMax, 10)))
+    # sigma_betaMax = calc_sigma(betaMax)
 
     sigma_i = sigMin
     for i in range(1,iterMax):
@@ -113,9 +121,9 @@ def calc_betaMax(Ma1, gamma):
         if (beta_ip1 < beta_i):
             betaMax = beta_i
             dSig = dSig * 0.5
-            print("betaMax = {}, Sigma-Schritt = {}".format(betaMax, dSig))
+            # print("betaMax = {}, Sigma-Schritt = {}".format(betaMax, dSig))
             if (dSig < error): 
-                print("({} iter)".format(i))
+                #print("({} iter)".format(i))
                 break
         else:
             sigma_i = sigma_i + dSig
@@ -140,21 +148,19 @@ def plot():
         sigMin = calc_sigMin(Ma1)
         sigma = np.linspace(sigMin, 90, 100)
 
-        betaMax, sigma_betaMax = calc_betaMax(Ma1, gamma)
+        # calc_betaMax does not work correct
+        # betaMax, sigma_betaMax = calc_betaMax(Ma1, gamma)
 
         beta = calc_beta(Ma1, sigma, gamma)
-        # Ma2 = calc_Ma2(Ma1, sigma, beta, gamma)
-        # for i in range(0, len(Ma2)):
-        #     if (Ma2[i] > 1.):
-        #         list_betaWeak = list_betaWeak.append(beta)
-        #     else:
-        #         list_betaStrong = list_betaStrong.append(beta)
+        betaMax = max(beta)
+
         X = sigma
         Y = beta
         ax.plot(X, Y, label='M={}'.format(Ma1))
 
         ax.plot(sigma_betaMax, betaMax, 'rx')
 
+    
     ax.set_xlim(25, 90)
     ax.set_ylim(0, 26)
     ax.set_xlabel(r"shock angle $\sigma$")
@@ -208,5 +214,6 @@ p2dp1 = ns.calc_p2dp1(Ma1n, gamma)
 
 
 # plot()
+find_sigma_12(2.0, 10)
 # ----------------- PLOTTING ----------------------------------
 
