@@ -13,6 +13,9 @@ pi = np.pi
 def secant(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
     func_a = func(a) - target
     func_b = func(b) - target
+    if(abs(func_a-func_b) < 1e-4):
+        print("Error: Secant-Method, f(a)=f(b)")
+
     iteration_counter = 0
     list_secant = []
     while abs(func_b) > tolerance and iteration_counter < max_steps:
