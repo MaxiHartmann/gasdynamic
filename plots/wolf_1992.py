@@ -38,7 +38,7 @@ def calc_beta(M1, sigma, gamma=1.4):
     beta = math.atan(tan_beta)
     return beta
 
-def calc_sigma_betaMax(M1, gamma=1.4): 
+def calc_sigma_betaMax(M1, gamma=1.4):
     # Wellmann: Maximum Wave Angle:
     alpha=math.asin(1/M1)
     result = 1./gamma*(((gamma+1)/2.-math.cos(2*alpha)) \
