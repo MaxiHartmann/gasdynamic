@@ -98,11 +98,38 @@ def bisection(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
             a = c
         counter+=1
              
-    print("The value of root is : {:.06f} ({} iter)".format(c, counter))
+    # print("The value of root is : {:.06f} ({} iter)".format(c, counter))
     return c
 
+def secant(func, a, b, max_steps=100, tolerance=1e-5, target=0.):
+    func_a = func(a) - target
+    func_b = func(b) - target
+    if(abs(func_a-func_b) < 1e-4):
+        print("Error: Secant-Method, f(a)=f(b)")
+
+    iteration_counter = 0
+    x = b - float(func_b) * (b-a) / (func_b - func_a)
+
+    while abs(func_b) > tolerance and iteration_counter < max_steps:
+        try:
+            x = b - float(func_b) * (b-a) / (func_b - func_a)
+        except ZeroDivisionError:
+            print("Error! - denominator zero for x = ", x)
+        a = b
+        b = x
+        func_a = func_b
+        func_b = func(b)-target
+        iteration_counter += 1
+
+        # print(iteration_counter)
+        
+    # Here, either a solution is found, or too many iterations
+    if abs(func_b) > tolerance:
+        iteration_counter = -1
+    return x
+
 # ===================== different ways to get Machnumber =======================================
-def calcInflowMachnumber(Type, value):
+def calc_inflowMachnumber(Type, value):
     if (Type==0):
         mach_1 = value;
         if (mach_1 < 1.):
@@ -134,7 +161,8 @@ def calcInflowMachnumber(Type, value):
                 print("T2/T1 must be greater than 1")
                 return np.nan
         # Solve Iterative
-        mach_1 = bisection(calc_T2dT1, 1., 20., 20, 1e-6, T2dT1)
+        # mach_1 = bisection(calc_T2dT1, 1., 20., 20, 1e-6, T2dT1)
+        mach_1 = secant(calc_T2dT1, 1., 20., 20, 1e-6, T2dT1)
     elif (Type==5):
         p02dp01 = value;
         if (p02dp01 > 1.):
@@ -142,6 +170,7 @@ def calcInflowMachnumber(Type, value):
                 return np.nan
         # Solve Iterative
         mach_1 = bisection(calc_p02dp01, 1., 20., 100, 1e-6, p02dp01)
+        # mach_1 = secant(calc_p02dp01, 1., 20., 100, 1e-6, p02dp01)
     elif (Type==6):
         p1dp02 = value;
         if (p1dp02 < 0. or p1dp02 > 0.52828178):
@@ -159,54 +188,55 @@ def calcInflowMachnumber(Type, value):
 # Test Programm:
 # ==============================================================================
 
-gamma = 1.4
-inputType = 0
-inputValue = 5.0
-
-Ma1 = inputValue
-Ma2 = calc_Ma2(inputValue)
-p2dp1 = calc_p2dp1(inputValue)
-rho2drho1 = calc_rho2drho1(inputValue)
-T2dT1 = calc_T2dT1(inputValue)
-p02dp01 = calc_p02dp01(inputValue)
-p1dp02 = calc_p1dp02(inputValue)
-inputValuestar = calc_MaStar(inputValue)
-Ma1star = calc_MaStar(inputValue)
-Ma2star = calc_MaStar(Ma2)
-
-print("Ma2 = {:.05f}".format(Ma2))
-print("p2/p1 = {:.05f}".format(p2dp1))
-print("rho2/rho1 = {:.05f}".format(rho2drho1))
-print("T2/T1 = {:.05f}".format(T2dT1))
-print("p02/p01 = {:.05f}".format(p02dp01))
-print("p1/p02 = {:.05f}".format(p1dp02))
-print("Ma1* = {:.05f}".format(Ma1star))
-print("Ma2* = {:.05f}".format(Ma2star))
-
-inputType = 0
-inputValue = Ma1
-print("Ma1 = {:.05f}".format(calcInflowMachnumber(inputType, inputValue)))
-
-inputType = 1
-inputValue = Ma2
-print("Ma1 = f(Ma2) = {:.05f}".format(calcInflowMachnumber(inputType, inputValue)))
-
-inputType = 2
-inputValue = p2dp1
-print("Ma1 = f(p2/p1) = {:.05f}".format(calcInflowMachnumber(inputType, inputValue)))
-
-inputType = 3
-inputValue = rho2drho1
-print("Ma1 = f(rho2/rho1) = {:.05f}".format(calcInflowMachnumber(inputType, inputValue)))
-
-inputType = 4
-inputValue = T2dT1
-print("Ma1 = f(T2/T1) = {:.05f}".format(calcInflowMachnumber(inputType, inputValue)))
-
-inputType = 5
-inputValue = p02dp01
-print("Ma1 = f(p02/p01) = {:.05f}".format(calcInflowMachnumber(inputType, inputValue)))
-
-inputType = 6
-inputValue = p1dp02
-print("Ma1 = f(p1/p02) = {:.05f}".format(calcInflowMachnumber(inputType, inputValue)))
+if __name__ == "__main__":
+    gamma = 1.4
+    inputType = 0
+    inputValue = 5.0
+    
+    Ma1 = inputValue
+    Ma2 = calc_Ma2(inputValue)
+    p2dp1 = calc_p2dp1(inputValue)
+    rho2drho1 = calc_rho2drho1(inputValue)
+    T2dT1 = calc_T2dT1(inputValue)
+    p02dp01 = calc_p02dp01(inputValue)
+    p1dp02 = calc_p1dp02(inputValue)
+    inputValuestar = calc_MaStar(inputValue)
+    Ma1star = calc_MaStar(inputValue)
+    Ma2star = calc_MaStar(Ma2)
+    
+    print("Ma2 = {:.05f}".format(Ma2))
+    print("p2/p1 = {:.05f}".format(p2dp1))
+    print("rho2/rho1 = {:.05f}".format(rho2drho1))
+    print("T2/T1 = {:.05f}".format(T2dT1))
+    print("p02/p01 = {:.05f}".format(p02dp01))
+    print("p1/p02 = {:.05f}".format(p1dp02))
+    print("Ma1* = {:.05f}".format(Ma1star))
+    print("Ma2* = {:.05f}".format(Ma2star))
+    
+    inputType = 0
+    inputValue = Ma1
+    print("Ma1 = {:.05f}".format(calc_inflowMachnumber(inputType, inputValue)))
+    
+    inputType = 1
+    inputValue = Ma2
+    print("Ma1 = f(Ma2) = {:.05f}".format(calc_inflowMachnumber(inputType, inputValue)))
+    
+    inputType = 2
+    inputValue = p2dp1
+    print("Ma1 = f(p2/p1) = {:.05f}".format(calc_inflowMachnumber(inputType, inputValue)))
+    
+    inputType = 3
+    inputValue = rho2drho1
+    print("Ma1 = f(rho2/rho1) = {:.05f}".format(calc_inflowMachnumber(inputType, inputValue)))
+    
+    inputType = 4
+    inputValue = T2dT1
+    print("Ma1 = f(T2/T1) = {:.05f}".format(calc_inflowMachnumber(inputType, inputValue)))
+    
+    inputType = 5
+    inputValue = p02dp01
+    print("Ma1 = f(p02/p01) = {:.05f}".format(calc_inflowMachnumber(inputType, inputValue)))
+    
+    inputType = 6
+    inputValue = p1dp02
+    print("Ma1 = f(p1/p02) = {:.05f}".format(calc_inflowMachnumber(inputType, inputValue)))
