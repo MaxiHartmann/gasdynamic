@@ -11,6 +11,7 @@ import tkinter as tk
 from tkinter import ttk
 import isentropicFlow as isenFlow
 import normalShock as ns
+import obliqueShock as os
 
 LARGE_FONT=("Verdana", 12)
 

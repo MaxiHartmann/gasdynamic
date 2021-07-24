@@ -69,6 +69,21 @@ def calc_M2eq1Point(M1, gamma=1.4):
 def calc_M1n(M1, sigma):
     return M1*math.sin(sigma)
 
+# ===================== different ways to get Ma1n =======================================
+def calcInflowMachnumber(Type, value, gamma=1.4):
+    if (Type==0):
+        mach_1 = value;
+        if (mach_1 < 1.):
+                print("M1 must be greater than 1")
+                return np.nan
+    elif (Type==1):
+        mach_2 = value;
+        if (mach_2 < 0.37796447 or mach_2 > 1.):
+                print("M2 must be between  0.37796447 and 1!")
+                return np.nan
+        mach_2_star = calc_MaStar(mach_2)
+        mach_1_star = 1. / mach_2_star
+        mach_1 = calc_MaFromMaStar(mach_1_star)
 
 if __name__ == '__main__':
     print("=====   TEST:    =====")
