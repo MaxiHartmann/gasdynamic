@@ -1,0 +1,473 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.1">
+  <object class="tk.Toplevel" id="frame_main">
+    <property name="height">200</property>
+    <property name="title" translatable="yes">Y+ Estimation</property>
+    <property name="width">200</property>
+    <child>
+      <object class="tk.Frame" id="frame1">
+        <property name="background">#000041</property>
+        <property name="height">600</property>
+        <property name="width">400</property>
+        <layout manager="pack">
+          <property name="propagate">True</property>
+          <property name="side">top</property>
+        </layout>
+        <child>
+          <object class="tk.LabelFrame" id="input_frame">
+            <property name="background">#000041</property>
+            <property name="font">{Arial} 14 {bold}</property>
+            <property name="foreground">#d9d9d9</property>
+            <property name="height">400</property>
+            <property name="padx">5</property>
+            <property name="pady">5</property>
+            <property name="relief">ridge</property>
+            <property name="text" translatable="yes">INPUT</property>
+            <property name="width">350</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+            </layout>
+            <child>
+              <object class="tk.Frame" id="input_row1">
+                <property name="background">#000041</property>
+                <property name="height">200</property>
+                <property name="padx">20</property>
+                <property name="width">300</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="tk.Label" id="label_Uinf">
+                    <property name="anchor">e</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">U_inf  =  </property>
+                    <property name="width">10</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Entry" id="entry_Uinf">
+                    <property name="font">{DejaVu Sans Mono} 12 {}</property>
+                    <property name="text" translatable="yes">1.0</property>
+                    <property name="textvariable">double:input_Uinf</property>
+                    <property name="width">15</property>
+                    <layout manager="pack">
+                      <property name="pady">2</property>
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Label" id="label_Uinf_unit">
+                    <property name="anchor">w</property>
+                    <property name="background">#000041</property>
+                    <property name="borderwidth">0</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">[m/s]</property>
+                    <property name="width">8</property>
+                    <layout manager="pack">
+                      <property name="padx">10</property>
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Frame" id="input_row2">
+                <property name="background">#000041</property>
+                <property name="height">200</property>
+                <property name="padx">20</property>
+                <property name="width">300</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="tk.Label" id="label_rho">
+                    <property name="anchor">e</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">rho_inf  =  </property>
+                    <property name="width">10</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Entry" id="entry_rho">
+                    <property name="font">{DejaVu Sans Mono} 12 {}</property>
+                    <property name="text" translatable="yes">1.205</property>
+                    <property name="textvariable">double:input_rho</property>
+                    <property name="width">15</property>
+                    <layout manager="pack">
+                      <property name="pady">2</property>
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Label" id="label_rho_unit">
+                    <property name="anchor">w</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">[kg/m3]</property>
+                    <property name="width">8</property>
+                    <layout manager="pack">
+                      <property name="padx">10</property>
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Frame" id="input_row3">
+                <property name="background">#000041</property>
+                <property name="height">200</property>
+                <property name="padx">20</property>
+                <property name="width">300</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="tk.Label" id="label_mu">
+                    <property name="anchor">e</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">mu_inf  =  </property>
+                    <property name="width">10</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Entry" id="entry_mu">
+                    <property name="font">{DejaVu Sans Mono} 12 {}</property>
+                    <property name="text" translatable="yes">1.82e-5</property>
+                    <property name="textvariable">double:input_mu</property>
+                    <property name="width">15</property>
+                    <layout manager="pack">
+                      <property name="pady">2</property>
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Label" id="label_mu_unit">
+                    <property name="anchor">w</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">[kg/ms]</property>
+                    <property name="width">8</property>
+                    <layout manager="pack">
+                      <property name="padx">10</property>
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Frame" id="input_row4">
+                <property name="background">#000041</property>
+                <property name="height">200</property>
+                <property name="padx">20</property>
+                <property name="width">300</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="tk.Label" id="label_Lturb">
+                    <property name="anchor">e</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">L_turb  =  </property>
+                    <property name="width">10</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Entry" id="entry_Lturb">
+                    <property name="font">{DejaVu Sans Mono} 12 {}</property>
+                    <property name="text" translatable="yes">1.0</property>
+                    <property name="textvariable">double:input_L</property>
+                    <property name="width">15</property>
+                    <layout manager="pack">
+                      <property name="pady">2</property>
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Label" id="label_Lturb_unit">
+                    <property name="anchor">w</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">[m]</property>
+                    <property name="width">8</property>
+                    <layout manager="pack">
+                      <property name="padx">10</property>
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Frame" id="input_row5">
+                <property name="background">#000041</property>
+                <property name="height">200</property>
+                <property name="padx">20</property>
+                <property name="width">300</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="tk.Label" id="label_yplus">
+                    <property name="anchor">e</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">Y+  =  </property>
+                    <property name="width">10</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Entry" id="entry_yplus">
+                    <property name="font">{DejaVu Sans Mono} 12 {}</property>
+                    <property name="text" translatable="yes">1.0</property>
+                    <property name="textvariable">double:input_yplus</property>
+                    <property name="width">15</property>
+                    <layout manager="pack">
+                      <property name="pady">2</property>
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Label" id="label_yplus_unit">
+                    <property name="anchor">w</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">[-]</property>
+                    <property name="width">8</property>
+                    <layout manager="pack">
+                      <property name="padx">10</property>
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="tk.LabelFrame" id="output_frame">
+            <property name="background">#000041</property>
+            <property name="font">{Arial} 14 {bold}</property>
+            <property name="foreground">#d9d9d9</property>
+            <property name="height">200</property>
+            <property name="relief">ridge</property>
+            <property name="text" translatable="yes">OUTPUT</property>
+            <property name="width">350</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+            </layout>
+            <child>
+              <object class="tk.Frame" id="output_row1">
+                <property name="background">#000041</property>
+                <property name="height">200</property>
+                <property name="padx">20</property>
+                <property name="width">300</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="tk.Label" id="label_Re">
+                    <property name="anchor">e</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">Re  =  </property>
+                    <property name="width">10</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Entry" id="entry_Re">
+                    <property name="font">{DejaVu Sans Mono} 12 {}</property>
+                    <property name="relief">raised</property>
+                    <property name="state">normal</property>
+                    <property name="takefocus">false</property>
+                    <property name="textvariable">double:output_Re</property>
+                    <property name="width">15</property>
+                    <layout manager="pack">
+                      <property name="pady">2</property>
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Label" id="label_Re_unit">
+                    <property name="anchor">w</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">[-]</property>
+                    <property name="width">8</property>
+                    <layout manager="pack">
+                      <property name="padx">10</property>
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Frame" id="output_row2">
+                <property name="background">#000041</property>
+                <property name="height">200</property>
+                <property name="padx">20</property>
+                <property name="width">300</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="tk.Label" id="label_y">
+                    <property name="anchor">e</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">y  =  </property>
+                    <property name="width">10</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Entry" id="entry_y">
+                    <property name="font">{DejaVu Sans Mono} 12 {}</property>
+                    <property name="textvariable">double:output_y</property>
+                    <property name="width">15</property>
+                    <layout manager="pack">
+                      <property name="padx">2</property>
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Label" id="label_y_unit">
+                    <property name="anchor">w</property>
+                    <property name="background">#000041</property>
+                    <property name="font">{Arial} 12 {}</property>
+                    <property name="foreground">#d9d9d9</property>
+                    <property name="text" translatable="yes">[m]</property>
+                    <property name="width">8</property>
+                    <layout manager="pack">
+                      <property name="padx">10</property>
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Frame" id="button_frame">
+            <property name="background">#000041</property>
+            <property name="height">200</property>
+            <property name="width">200</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">3</property>
+            </layout>
+            <child>
+              <object class="tk.Button" id="button_calculate">
+                <property name="background">#000041</property>
+                <property cbtype="simple" name="command" type="command">calculate</property>
+                <property name="font">{Arial} 12 {}</property>
+                <property name="foreground">#d9d9d9</property>
+                <property name="text" translatable="yes">Calculate</property>
+                <property name="width">15</property>
+                <layout manager="pack">
+                  <property name="pady">10</property>
+                  <property name="side">right</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Button" id="button_quit">
+                <property name="background">#000041</property>
+                <property cbtype="simple" name="command" type="command">quit</property>
+                <property name="font">{Arial} 12 {}</property>
+                <property name="foreground">#d9d9d9</property>
+                <property name="text" translatable="yes">Quit</property>
+                <property name="width">15</property>
+                <layout manager="pack">
+                  <property name="pady">10</property>
+                  <property name="side">left</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
