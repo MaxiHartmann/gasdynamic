@@ -51,9 +51,10 @@ class window_1:
         self.lbl_unit_5 = tk.Label(input_frame, text='[-]').grid(row=4, column=2, padx=5)
 
 
-        title_label_1 = tk.Label(text='INPUT-Values:', font='Helvetica 18 bold')
-        title_label_1.pack()
-        input_frame.pack(expand=1, fill=tk.X, pady=10, padx=5)
+        title_label_1 = tk.Label(self.frame, text='INPUT-Values:', font='Helvetica 18 bold')
+        title_label_1.grid(row=2)
+        #input_frame.pack(expand=1, fill=tk.X, pady=10, padx=5)
+        input_frame.grid()
 
 
         # output_1: Reynolds number 
@@ -76,17 +77,18 @@ class window_1:
         self.lbl_unit_7 = tk.Label(output_frame, text='[m]')
         self.lbl_unit_7.grid(row=1, column=2, padx=5)
 
-        title_label_1 = tk.Label(text='OUTPUT-Values:', font='Helvetica 18 bold')
-        title_label_1.pack()
-        output_frame.pack(expand=1, fill=tk.X, pady=10, padx=5)
+        title_label_2 = tk.Label(self.frame, text='OUTPUT-Values:', font='Helvetica 18 bold')
+        title_label_2.grid(row=2)
+        # output_frame.pack(expand=1, fill=tk.X, pady=10, padx=5)
+        output_frame.grid()
 
 
         # Buttons
         self.button1 = tk.Button(self.frame, text = 'Calculate', width = 25, command = self.calc)
-        self.button1.pack(side=tk.BOTTOM)
+        self.button1.grid(row=3)
         self.button2 = tk.Button(self.frame, text = 'Quit', width = 25, command = self.close_window)
-        self.button2.pack(side=tk.BOTTOM)
-        self.frame.pack()
+        self.button2.grid(row=4)
+        self.frame.grid()
     def calc(self):
         u_inf = float(self.val_1.get())
         rho_inf = float(self.val_2.get())
