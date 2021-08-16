@@ -1,4 +1,5 @@
 import math as ma
+import oblique_shock_vectors as osv
 
 """
 IMPORTANT: Here
@@ -143,6 +144,9 @@ def osr(i,g,m1,v):
     print("p2/p1 = {:.05f}".format(p2p1))
     print("rho2/rho1 = {:.05f}".format(r2r1))
     print("T2/T1 = {:.05f}".format(t2t1))
+
+    # Plot vectors:
+    # osv.plot_vectors(m1, sigma, g)
     return m2, p2p1, p02p01, beta, r2r1, m1n, sigma, t2t1, m2n
 
 if __name__ == "__main__":
@@ -154,3 +158,5 @@ if __name__ == "__main__":
     print("INPUT:")
     print("i={}, g={}, m1={}, v={}".format(i, g, m1, v))
     print(osr(i,g,m1,v))
+
+
