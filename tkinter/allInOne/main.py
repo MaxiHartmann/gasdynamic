@@ -11,7 +11,8 @@ import tkinter as tk
 from tkinter import ttk
 import isentropicFlow as isenFlow
 import normalShock as ns
-import obliqueShock as os
+import obliqueShockv2 as os
+from math import pi
 
 LARGE_FONT=("Verdana", 12)
 
@@ -408,6 +409,152 @@ class PageThree(tk.Frame):
         button1 = ttk.Button(self, text="Back to Home",
                 command=lambda: controller.show_frame(StartPage))
         button1.pack()
+
+        inputFrame = tk.Frame(self, bg='green', width=1200, height=100)
+        inputFrame.pack()
+
+        resultsFrame = tk.Frame(self, bg='blue', width=1200, height=400)
+        resultsFrame.pack(fill=tk.BOTH)
+
+        #====================Variables ====================  
+        txt_inputValue = tk.StringVar(value="20.0")
+        txt_gamma = tk.StringVar(value="1.4")
+        txt_Ma1 = tk.StringVar(value="2.0")
+        self.my_dict1={0: 'Turn angle (weak shock)', 
+                  1: 'Turn angle (strong shock)', 
+                  2: 'Wave angle', 
+                  3: 'M1n'}
+        keys=list(self.my_dict1.keys())
+        values=self.my_dict1.values()
+
+        self.txt_inputType = tk.StringVar(inputFrame, value=self.my_dict1[0])
+
+        #====================INPUT Line: inputFrame====================  
+        # ROW 0
+        self.lbl_name = tk.Label(inputFrame, text="Oblique Shock Relations",
+                bg='green', font=('arial', 20, 'bold'))
+        self.lbl_name.grid(row=0, column=0)
+        self.lbl_input = tk.Label(inputFrame, text="gamma = ")
+        self.lbl_input.grid(row=0, column=3, sticky=tk.E)
+        self.led_gamma = tk.Entry(inputFrame, textvariable=txt_gamma, width=8)
+        self.led_gamma.grid(row=0, column=4)
+
+        # ROW 1
+        self.lbl_input = tk.Label(inputFrame, text="INPUT:", font=('arial', 20, 'bold'))
+        self.lbl_input.grid(row=1, column=0, sticky=tk.E)
+        self.lsbox_1 = tk.OptionMenu(inputFrame, self.txt_inputType, *self.my_dict1.values())
+
+        self.lbl_input = tk.Label(inputFrame, text="Ma1 = ")
+        self.lbl_input.grid(row=1, column=1, sticky=tk.E)
+        self.e_input_Ma1 = tk.Entry(inputFrame, textvariable=txt_Ma1, width=8)
+        self.e_input_Ma1.grid(row=1, column=2)
+
+        self.lsbox_1.config(width=16)
+        self.lsbox_1.grid(row=1, column=3)
+
+        self.e_inputValue = tk.Entry(inputFrame, textvariable=txt_inputValue, width=10)
+        self.e_inputValue.grid(row=1, column=4)
+        self.btn_calc = tk.Button(inputFrame, text="Calculate", fg="red")
+        self.btn_calc.grid(row=1, column=5)
+        self.btn_calc.bind('<Button-1>', self.calc)
+        self.e_inputValue.bind('<Return>', self.calc)
+
+        ### ====================Results Frame====================  
+        # Column 0 and 1
+        label_Ma2 = tk.Label(resultsFrame, text="Ma2 =")
+        label_Ma2.grid(row=0, column=0, sticky=tk.E)
+        label_p2dp1 = tk.Label(resultsFrame, text="p2/p1 =")
+        label_p2dp1.grid(row=1, column=0, sticky=tk.E)
+        label_p02dp01 = tk.Label(resultsFrame, text="p02/p01 =")
+        label_p02dp01.grid(row=2, column=0, sticky=tk.E)
+
+        self.e_Ma2 = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.e_Ma2.grid(row=0, column=1)
+        self.e_p2dp1 = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.e_p2dp1.grid(row=1, column=1)
+        self.e_p02dp01 = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.e_p02dp01.grid(row=2, column=1)
+
+        # Column 2 and 3
+        label_turnAngle = tk.Label(resultsFrame, text="Turn ang. = ")
+        label_turnAngle.grid(row=0, column=2, sticky=tk.E)
+        label_rho2drho1 = tk.Label(resultsFrame, text="rho2/rho1 = ")
+        label_rho2drho1.grid(row=1, column=2, sticky=tk.E)
+        label_M1n = tk.Label(resultsFrame, text="M1n = ")
+        label_M1n.grid(row=2, column=2, sticky=tk.E)
+
+        self.e_turnAngle = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.e_turnAngle.grid(row=0, column=3)
+        self.e_rho2drho1 = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.e_rho2drho1.grid(row=1, column=3)
+        self.e_M1n = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.e_M1n.grid(row=2, column=3)
+
+        # Column 2 and 3
+        label_waveAngle = tk.Label(resultsFrame, text="Wave ang. = ")
+        label_waveAngle.grid(row=0, column=4, sticky=tk.E)
+        label_T2dT1 = tk.Label(resultsFrame, text="T2/T1 = ")
+        label_T2dT1.grid(row=1, column=4, sticky=tk.E)
+        label_M2n = tk.Label(resultsFrame, text="M2n = ")
+        label_M2n.grid(row=2, column=4, sticky=tk.E)
+
+        self.e_waveAngle = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.e_waveAngle.grid(row=0, column=5)
+        self.e_T2dT1 = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.e_T2dT1.grid(row=1, column=5)
+        self.e_M2n = tk.Entry(resultsFrame, text="", justify='right', width=12)
+        self.e_M2n.grid(row=2, column=5)
+
+
+    def reset(self):
+        pass
+        self.e_Ma2.delete(0,tk.END)
+        self.e_p2dp1.delete(0,tk.END)
+        self.e_p02dp01.delete(0,tk.END)
+
+        self.e_turnAngle.delete(0,tk.END)
+        self.e_rho2drho1.delete(0,tk.END)
+        self.e_M1n.delete(0,tk.END)
+
+        self.e_waveAngle.delete(0,tk.END)
+        self.e_T2dT1.delete(0,tk.END)
+        self.e_M2n.delete(0,tk.END)
+
+ 
+    def calc(self, event):
+        print("reset and Calc")
+        self.reset()
+
+        inputType = self.get_idx_fromOptionMenu(self.txt_inputType.get())
+        inputValue=float(self.e_inputValue.get())
+        gamma=float(self.led_gamma.get())
+        Ma1 = float(self.e_input_Ma1.get())
+
+        [m2, p2p1, p02p01, beta, r2r1, m1n, sigma, t2t1, m2n] = os.osr(inputType,
+                gamma, Ma1, inputValue)
+
+        # column=0
+        self.e_Ma2.insert(0,"{:.07f}".format(m2))
+        self.e_p2dp1.insert(0,"{:.07f}".format(p2p1))
+        self.e_p02dp01.insert(0,"{:.07f}".format(p02p01))
+
+        # column=1
+        self.e_turnAngle.insert(0,"{:.07f}".format(sigma*180/pi))
+        self.e_rho2drho1.insert(0,"{:.07f}".format(r2r1))
+        self.e_M1n.insert(0,"{:.07f}".format(m1n))
+
+        # column=2
+        self.e_waveAngle.insert(0,"{:.07f}".format(beta*180/pi))
+        self.e_T2dT1.insert(0,"{:.07f}".format(t2t1))
+        self.e_M2n.insert(0,"{:.07f}".format(m2n))
+
+
+
+    def get_idx_fromOptionMenu(self, search_key):
+        for idx, option in self.my_dict1.items():
+            if option == search_key:
+                return idx
+
 
 
 class PageFour(tk.Frame):
