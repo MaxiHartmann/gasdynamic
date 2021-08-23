@@ -458,6 +458,7 @@ class PageThree(tk.Frame):
         self.btn_calc.grid(row=1, column=5)
         self.btn_calc.bind('<Button-1>', self.calc)
         self.e_inputValue.bind('<Return>', self.calc)
+        self.e_input_Ma1.bind('<Return>', self.calc)
 
         ### ====================Results Frame====================  
         # Column 0 and 1
