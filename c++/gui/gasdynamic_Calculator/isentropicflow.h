@@ -51,6 +51,10 @@ public:
     double MachAngle;
     double PM_Angle;
     double AdAstar;
+
+    double pdpstar;
+    double rhodrhostar;
+    double TdTstar;
 };
 
 #endif // ISENTROPICFLOW_H

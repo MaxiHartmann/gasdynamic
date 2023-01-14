@@ -188,6 +188,18 @@ void isentropicFlow::calcResults()
     AdAstar = 1. / (ma * std::pow((2. / (Gamma + 1.) *
                        (1. + (Gamma - 1.) / 2. * ma * ma)),
                       (-(Gamma + 1.) / (2. * Gamma - 2.))));
+
+    double pstar_p0 = std::pow((2 / (Gamma + 1) ), (Gamma / (Gamma - 1)));
+    double p0_p = 1 / pdp0;
+    pdpstar = 1 / (p0_p * pstar_p0);
+
+    double rhostar_rho0 = std::pow((2 / (Gamma + 1) ), (1 / (Gamma - 1)));
+    double rho0_rho = 1 / rhodrho0;
+    rhodrhostar = 1 / (rho0_rho * rhostar_rho0);
+
+    double Tstar_T0 = 2 / (Gamma + 1);
+    double T0_T = 1 / TdT0;
+    TdTstar = 1 / (T0_T * Tstar_T0);
 }
 
 void isentropicFlow::printResults()

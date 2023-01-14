@@ -34,20 +34,19 @@ void MainWindow::on_btn_calculate_clicked()
     // std::cout<<"Type = " << type << std::endl;
     // std::cout<<"Input = " << input << std::endl;
     isentropicFlow pos1(1, type, input, gamma);
-    pos1.printResults();
+    // pos1.printResults();
 
     // set line_edits to calculated Values
-    ui->led_machnumber->setText(QString::number(pos1.ma));
-    ui->led_machAngle->setText(QString::number(pos1.MachAngle));
-    ui->led_pdp0->setText(QString::number(pos1.pdp0));
-    ui->led_TdT0->setText(QString::number(pos1.TdT0));
-    ui->led_pmAngle->setText(QString::number(pos1.PM_Angle));
-    ui->led_rhodrho0->setText(QString::number(pos1.rhodrho0));
-    ui->led_AdAstar->setText(QString::number(pos1.AdAstar));
-    ui->led_machStar->setText(QString::number(pos1.machStar));
+    ui->led_machnumber->setText(QString::number(pos1.ma, 'f', 6));
+    ui->led_machAngle->setText(QString::number(pos1.MachAngle, 'f', 2));
+    ui->led_pdp0->setText(QString::number(pos1.pdp0, 'f', 6));
+    ui->led_TdT0->setText(QString::number(pos1.TdT0, 'f', 6));
+    ui->led_pmAngle->setText(QString::number(pos1.PM_Angle, 'f', 2));
+    ui->led_rhodrho0->setText(QString::number(pos1.rhodrho0, 'f', 6));
+    ui->led_AdAstar->setText(QString::number(pos1.AdAstar, 'f', 6));
+    ui->led_machStar->setText(QString::number(pos1.machStar, 'f', 6));
 
-    // TODO:
-    ui->led_pdpstar->setText(QString::number(pos1.ma));
-    ui->led_TdTstar->setText(QString::number(pos1.ma));
-    ui->led_rhodrhostar->setText(QString::number(pos1.ma));
+    ui->led_pdpstar->setText(QString::number(pos1.pdpstar, 'f', 6));
+    ui->led_rhodrhostar->setText(QString::number(pos1.rhodrhostar, 'f', 6));
+    ui->led_TdTstar->setText(QString::number(pos1.TdTstar, '6', 6));
 }
