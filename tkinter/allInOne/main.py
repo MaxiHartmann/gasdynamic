@@ -12,6 +12,7 @@ from tkinter import ttk
 import isentropicFlow as isenFlow
 import normalShock as ns
 import obliqueShockv2 as os
+import oblique_shock_vectors as osv
 from math import pi
 
 LARGE_FONT=("Verdana", 12)
@@ -456,8 +457,12 @@ class PageThree(tk.Frame):
         self.e_inputValue.grid(row=1, column=4)
         self.btn_calc = tk.Button(inputFrame, text="Calculate", fg="red")
         self.btn_calc.grid(row=1, column=5)
+        self.btn_plot = tk.Button(inputFrame, text="Plot", fg="red")
+        self.btn_plot.grid(row=1, column=6)
         self.btn_calc.bind('<Button-1>', self.calc)
+        self.btn_plot.bind('<Button-1>', self.plot)
         self.e_inputValue.bind('<Return>', self.calc)
+        self.e_input_Ma1.bind('<Return>', self.calc)
 
         ### ====================Results Frame====================  
         # Column 0 and 1
@@ -519,6 +524,16 @@ class PageThree(tk.Frame):
         self.e_waveAngle.delete(0,tk.END)
         self.e_T2dT1.delete(0,tk.END)
         self.e_M2n.delete(0,tk.END)
+
+    def plot(self, event):
+        inputType = self.get_idx_fromOptionMenu(self.txt_inputType.get())
+        inputValue=float(self.e_inputValue.get())
+        gamma=float(self.led_gamma.get())
+        Ma1 = float(self.e_input_Ma1.get())
+
+        [m2, p2p1, p02p01, beta, r2r1, m1n, sigma, t2t1, m2n] = os.osr(inputType, gamma, Ma1, inputValue) 
+        # TODO: sigma should be beta 
+        osv.plot_vectors(Ma1, sigma, gamma)
 
  
     def calc(self, event):

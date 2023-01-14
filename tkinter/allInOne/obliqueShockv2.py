@@ -1,4 +1,5 @@
 import math as ma
+import oblique_shock_vectors as osv
 
 """
 IMPORTANT: Here
@@ -133,7 +134,39 @@ def osr(i,g,m1,v):
     r2r1=rr0(g,m2n) / rr0(g,m1n) * p02p01
     t2t1=tt0(g,m2n)/tt0(g,m1n)
 
-    print("OUTPUT:")
+    # print("OUTPUT:")
+    # print("beta = {:.05f}".format(beta*180./pi))
+    # print("sigma = {:.05f}".format(sigma*180./pi))
+    # print("m1n = {:.05f}".format(m1n))
+    # print("m2n = {:.05f}".format(m2n))
+    # print("m2 = {:.05f}".format(m2))
+    # print("p02/p01 = {:.05f}".format(p02p01))
+    # print("p2/p1 = {:.05f}".format(p2p1))
+    # print("rho2/rho1 = {:.05f}".format(r2r1))
+    # print("T2/T1 = {:.05f}".format(t2t1))
+
+    # Plot vectors:
+    # osv.plot_vectors(m1, sigma, g)
+    return m2, p2p1, p02p01, beta, r2r1, m1n, sigma, t2t1, m2n
+
+if __name__ == "__main__":
+    # INPUTS
+    i=0
+    g=1.4
+    m1=5.0
+    v=20.0
+    print("------------")
+    print("| INPUT:   |")
+    print("------------")
+    print("i={}, g={}, m1={}, v={}".format(i, g, m1, v))
+    print("------------")
+    print("| OUTPUT:  |")
+    print("------------")
+
+    # print(osr(i,g,m1,v))
+
+    [m2, p2p1, p02p01, beta, r2r1, m1n, sigma, t2t1, m2n] = osr(i, g, m1, v)
+
     print("beta = {:.05f}".format(beta*180./pi))
     print("sigma = {:.05f}".format(sigma*180./pi))
     print("m1n = {:.05f}".format(m1n))
@@ -143,14 +176,3 @@ def osr(i,g,m1,v):
     print("p2/p1 = {:.05f}".format(p2p1))
     print("rho2/rho1 = {:.05f}".format(r2r1))
     print("T2/T1 = {:.05f}".format(t2t1))
-    return m2, p2p1, p02p01, beta, r2r1, m1n, sigma, t2t1, m2n
-
-if __name__ == "__main__":
-    # INPUTS
-    i=0
-    g=1.4
-    m1=5.0
-    v=20.0
-    print("INPUT:")
-    print("i={}, g={}, m1={}, v={}".format(i, g, m1, v))
-    print(osr(i,g,m1,v))
