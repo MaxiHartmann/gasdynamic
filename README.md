@@ -6,4 +6,11 @@ simple calculations of compressible, perfect fluiddynamics
 ![main menu in tkinter-GUI](https://github.com/MaxiHartmann/gasdynamic/blob/main/tkinter/images/main_menu.png)
 
 ## C++ and QT
+TODO: 
+- p/p*
+- rho/rho* 
+- T/T* 
+
+
 ![better in qt5 with c++](c++/gui/gui_image.png)
+
